@@ -1,27 +1,50 @@
-import { useState } from "react";
-import { SAVEDATE } from "../logit/const";
+import { useEffect, useState } from "react";
+import { USUARIO } from "../logit/const";
 
-export function LoginModal({ handelUserName, modalOn, cerrarModal, addUser }) {
+export function InputDateModal({ handelUserName, modalOn, cerrarModal, addUser }) {
+  const [dateSaved, setDateSaved] = useState(() => {
+    const dateUsers = localStorage.getItem('usuarios');
+    return dateUsers ? JSON.parse(dateUsers) : null;
+  })
+  const nombresUsuariosGuardados = dateSaved.map(e => e.Nombre)
+
+  useEffect(() => {
+    console.log("🚀 ~ file: InputDateModal.jsx:9 ~ const[dateSaved,setDateSaved]=useState ~ dateSaved:", dateSaved
+    )
+  }, [dateSaved])
   // pedir el nombre de usario 
-  const [nameUser, setNameUser] = useState(null);
+  const [nameUser, setNameUser] = useState('');
+
   //recojer los datos introducidos
   function handelOnChange(e) {
     setNameUser(e.target.value);
+
   }
+
   //validar el campo del input
   const validity = () => {
-    if (nameUser != null) {
-      return nameUser.length > 4 ? false : true;
+    if (nameUser != '') {
+      return nameUser.length >= 3 ? false : true;
     }
+
   }
   //madar el nombrea al componente padre y cerrar la modal
   const handelClick = () => {
-    const userNew = new SAVEDATE(nameUser)
-    addUser(userNew)
+    if (nombresUsuariosGuardados.includes(nameUser)) {
+
+      console.log('ese usuario ya esta guardado')
+    } else {
+      const userNew = new USUARIO(nameUser);
+      addUser(userNew)
+    }
+
+
+
     handelUserName(nameUser);
     cerrarModal();
 
   }
+
 
   return (
     <>

@@ -18,13 +18,27 @@ export const WINER = {
   Empate: 'Empate',
 }
 
-export class SAVEDATE {
-  constructor(nombre, partidas, ganadas, empates, perdidas) {
-    this.id = nombre;
+export class USUARIO {
+  constructor(nombre) {
+    this.Id = nombre;
     this.Nombre = nombre;
-    this.Partidas = partidas;
-    this.Ganadas = ganadas;
-    this.Empates = empates;
-    this.Perdidas = perdidas;
+    this.Partidas = 0;
+    this.Ganadas = 0;
+    this.Empates = 0;
+    this.Perdidas = 0;
+  }
+  addPartidas() { this.Partidas++ };
+
+  addResult(result) {
+    if (result === 'win') {
+      this.Ganadas++;
+    }
+    else if (result === 'loss') {
+      this.Partidas++;
+    }
+    else if (result === 'empate') {
+      this.Empates++;
+    }
+    else console.log('no hay ganador')
   }
 }

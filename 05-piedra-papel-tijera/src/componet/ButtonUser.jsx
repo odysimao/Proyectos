@@ -1,8 +1,9 @@
 import { imgSrc } from '../logit/const.js'
 
-export function ButtonUser({ id, img_name, updateDisplay }) {
+export function ButtonUser({ id, img_name, updateDisplay, handleDate }) {
   const hadleClick = () => {
-    updateDisplay(id)
+    updateDisplay(id);
+    handleDate()
   }
 
   return (

@@ -1,14 +1,42 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import confetti from 'canvas-confetti'
 import { ButtonUser } from './componet/ButtonUser'
 import { WinerShow } from './componet/WinerShow'
 import { WINER, opciones, min, max } from './logit/const.js'
 import './App.css'
-import { LoginModal } from './componet/LoginModal'
+import { InputDateModal } from './componet/InputDateModal'
 import { Estadisticas } from './componet/Estadisticas'
+import { SaveDate } from './componet/SaveDate'
 
-var usuarios = [];
 
+const prueva = [{
+  Id: 'Ody',
+  Nombre: 'Ody',
+  Partidas: 5,
+  Ganadas: 3,
+  Perdidas: 1,
+  Empates: 1,
+  addpartidas: () => { this.Partidas + 1 }
+}, {
+  Id: 'Samira',
+  Nombre: 'Samira',
+  Partidas: 8,
+  Ganadas: 4,
+  Perdidas: 1,
+  Empates: 3,
+  addpartidas: () => { 1 + 1 }
+}, {
+  Id: 'Pedro',
+  Nombre: 'Pedro',
+  Partidas: 3,
+  Ganadas: 2,
+  Perdidas: 0,
+  Empates: 1,
+  addpartidas: () => { Partidas++ }
+}]
+
+
+const usuarios = [];
 function App() {
   //estados
   const [pantalla, setPantalla] = useState(null);
@@ -18,9 +46,27 @@ function App() {
   const [user, setUser] = useState('')
   const [modalOn, setModalOn] = useState(true);
 
+  // //Guadar las estadisticas del juego
+  // const [dateSaved, setDateSaved] = useState(() => {
+  //   const dateUsers = localStorage.getItem('usuarios');
+  //   return dateUsers ? JSON.parse(dateUsers) : null;
+  // })
+  // console.log("🚀 ~ file: App.jsx:53 ~ const[dateSaved,setDateSaved]=useState ~ dateSaved:", dateSaved)
+
 
   const addUser = (nuevoValor) => {
-    usuarios.push(nuevoValor)
+
+    usuarios.push(nuevoValor);
+
+
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    console.log("🚀 ~ file: App.jsx:57 ~ addUser ~ usuarios:", usuarios)
+  }
+
+  //guardar las estadisticas de los usuarios
+  const handleDate = () => {
+
+
   }
 
   //cerrar la modal del input
@@ -60,31 +106,22 @@ function App() {
       (pantalla == 'papel' && pantallaBot == 'piedra') ||
       (pantalla == 'piedra' && pantallaBot == 'tijera') ||
       (pantalla == 'tijera' && pantallaBot == 'papel')) {
-      console.log(winer)
+
       setWiner(WINER.Victoria)
       confetti()
     } else if (pantalla == pantallaBot) {
-      console.log(winer)
+
       setWiner(WINER.Empate)
     } else {
       setWiner(WINER.Perdiste)
-      console.log(winer)
+
     }
   }, [pantalla, pantallaBot, winer])
-
-  //Guadar las estadisticas del juego
-  // const [dateSaved, setDateSaved] = useState(() => {
-  //   const dateUsers = localStorage.getItem('usuarios');
-  //   return dateSaved ? JSON.parse(dateUsers) : null;
-  // })
-
-
-
 
 
   return (
     <main className='app'>
-      <LoginModal
+      <InputDateModal
         handelUserName={handelUserName}
         modalOn={modalOn}
         cerrarModal={cerrarModal}
@@ -92,13 +129,12 @@ function App() {
       <h1 className='tituloApp'>Piedra - Papel - Tijera</h1>
 
       <div className='baner-botones'>
-        <ButtonUser id='piedra' updateDisplay={updateDisplay} img_name='piedra' />
-        <ButtonUser id='papel' updateDisplay={updateDisplay} img_name='papel' />
-        <ButtonUser id='tijera' updateDisplay={updateDisplay} img_name='tijera' />
+        <ButtonUser id='piedra' updateDisplay={updateDisplay} img_name='piedra' handleDate={handleDate} />
+        <ButtonUser id='papel' updateDisplay={updateDisplay} img_name='papel' handleDate={handleDate} />
+        <ButtonUser id='tijera' updateDisplay={updateDisplay} img_name='tijera' handleDate={handleDate} />
       </div>
       <h2>{user}</h2>
       <button onClick={() => {
-        console.log(usuarios)
         setModalOn(true);
       }}>cambiar jugador</button>
       <Estadisticas
@@ -112,6 +148,7 @@ function App() {
         pantallaBot={pantallaBot}
         user={user}
       />
+      <SaveDate />
     </main>
   )
 }

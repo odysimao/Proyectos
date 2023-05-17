@@ -15,7 +15,7 @@
 
 .baner-botones {
   padding: 2px;
-  border-top: 2px solid #fff;
+  /* border-top: 2px solid #fff; */
   border-bottom: 2px solid #fff;
   display: flex;
   align-items: center;
