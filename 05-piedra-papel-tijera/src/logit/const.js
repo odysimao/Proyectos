@@ -20,13 +20,32 @@ export const WINER = {
 
 export class USUARIO {
   constructor(nombre) {
-    this.Id = nombre;
     this.Nombre = nombre;
     this.Partidas = 0;
     this.Ganadas = 0;
     this.Empates = 0;
     this.Perdidas = 0;
   }
+  save() {
+    const usuario = {
+      nombre: this.Nombre,
+      partidas: this.Partidas,
+      ganadas: this.Ganadas,
+      empate: this.Empates,
+      perdidas: this.Perdidas
+    };
+
+    //ESTOY TRABADO EN COMO GURDAR LOS DATOS >>>>
+    // const datos = localStorage.getItem('userSaved');
+
+    // const datosParseados = datos ? JSON.parse(datos) : [];
+    // datosParseados.push(usuario);
+
+    // console.log('elemento gurdados dentro del metodo >> ', datos)
+    // localStorage.setItem('userSaved', JSON.stringify(datosParseados))
+
+  }
+
   addPartidas() { this.Partidas++ };
 
   addResult(result) {

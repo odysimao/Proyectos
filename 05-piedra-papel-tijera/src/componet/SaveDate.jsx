@@ -1,12 +1,13 @@
 import { useUserData } from '../hook/useUserData';
+import { useEffect } from 'react';
 
-function SaveDate({ userId }) {
+export function SaveDate({ userId }) {
   const [userData, saveUserDataToLocalStorage] = useUserData(userId);
 
   useEffect(() => {
-    const data = { Id: userId, Nombre: 'Juan', Partidas: 10, Ganadas: 4, Perdidas: 2, Empates: 4 };
+    const data = { Id: userId, Nombre: userId, Partidas: 10, Ganadas: 4, Perdidas: 2, Empates: 4 };
     saveUserDataToLocalStorage(data);
-  }, [saveUserDataToLocalStorage, userId]);
+  }, [userId]);
 
   if (!userData) {
     return <div>Cargando datos del usuario...</div>;
@@ -14,11 +15,11 @@ function SaveDate({ userId }) {
 
   return (
     <div>
-      <h1>{userData.nombre}</h1>
-      <p>Total de partidas: {userData.totalPartidas}</p>
-      <p>Partidas ganadas: {userData.ganadas}</p>
-      <p>Partidas perdidas: {userData.perdidas}</p>
-      <p>Partidas empatadas: {userData.empates}</p>
+      <h1>{userData.Nombre}</h1>
+      <p>Total de partidas: {userData.Partidas}</p>
+      <p>Partidas ganadas: {userData.Ganadas}</p>
+      <p>Partidas perdidas: {userData.Perdidas}</p>
+      <p>Partidas empatadas: {userData.Empates}</p>
     </div>
   );
 }

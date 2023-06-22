@@ -3,14 +3,14 @@ import { USUARIO } from "../logit/const";
 
 export function InputDateModal({ handelUserName, modalOn, cerrarModal, addUser }) {
   const [dateSaved, setDateSaved] = useState(() => {
-    const dateUsers = localStorage.getItem('usuarios');
+    const dateUsers = localStorage.getItem('userSaved');
     return dateUsers ? JSON.parse(dateUsers) : null;
   })
-  const nombresUsuariosGuardados = dateSaved.map(e => e.Nombre)
+
+  // const nombresUsuariosGuardados = dateSaved.map(e => e.Nombre)
 
   useEffect(() => {
-    console.log("🚀 ~ file: InputDateModal.jsx:9 ~ const[dateSaved,setDateSaved]=useState ~ dateSaved:", dateSaved
-    )
+    console.log('usuarioas guradados => ', dateSaved)
   }, [dateSaved])
   // pedir el nombre de usario 
   const [nameUser, setNameUser] = useState('');
@@ -30,14 +30,9 @@ export function InputDateModal({ handelUserName, modalOn, cerrarModal, addUser }
   }
   //madar el nombrea al componente padre y cerrar la modal
   const handelClick = () => {
-    if (nombresUsuariosGuardados.includes(nameUser)) {
 
-      console.log('ese usuario ya esta guardado')
-    } else {
-      const userNew = new USUARIO(nameUser);
-      addUser(userNew)
-    }
-
+    const userNew = new USUARIO(nameUser).save();
+    addUser(userNew)
 
 
     handelUserName(nameUser);

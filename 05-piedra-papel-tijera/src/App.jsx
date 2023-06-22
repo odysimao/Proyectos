@@ -1,42 +1,14 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
 import { ButtonUser } from './componet/ButtonUser'
 import { WinerShow } from './componet/WinerShow'
-import { WINER, opciones, min, max } from './logit/const.js'
+import { WINER, opciones, min, max, USUARIO } from './logit/const.js'
 import './App.css'
 import { InputDateModal } from './componet/InputDateModal'
 import { Estadisticas } from './componet/Estadisticas'
-import { SaveDate } from './componet/SaveDate'
+import { SaveDate } from './componet/SaveDate.jsx'
 
 
-const prueva = [{
-  Id: 'Ody',
-  Nombre: 'Ody',
-  Partidas: 5,
-  Ganadas: 3,
-  Perdidas: 1,
-  Empates: 1,
-  addpartidas: () => { this.Partidas + 1 }
-}, {
-  Id: 'Samira',
-  Nombre: 'Samira',
-  Partidas: 8,
-  Ganadas: 4,
-  Perdidas: 1,
-  Empates: 3,
-  addpartidas: () => { 1 + 1 }
-}, {
-  Id: 'Pedro',
-  Nombre: 'Pedro',
-  Partidas: 3,
-  Ganadas: 2,
-  Perdidas: 0,
-  Empates: 1,
-  addpartidas: () => { Partidas++ }
-}]
-
-
-const usuarios = [];
 function App() {
   //estados
   const [pantalla, setPantalla] = useState(null);
@@ -55,12 +27,7 @@ function App() {
 
 
   const addUser = (nuevoValor) => {
-
-    usuarios.push(nuevoValor);
-
-
-    localStorage.setItem('usuarios', JSON.stringify(usuarios));
-    console.log("🚀 ~ file: App.jsx:57 ~ addUser ~ usuarios:", usuarios)
+    nuevoValor;
   }
 
   //guardar las estadisticas de los usuarios
@@ -110,11 +77,9 @@ function App() {
       setWiner(WINER.Victoria)
       confetti()
     } else if (pantalla == pantallaBot) {
-
       setWiner(WINER.Empate)
     } else {
       setWiner(WINER.Perdiste)
-
     }
   }, [pantalla, pantallaBot, winer])
 
@@ -148,7 +113,7 @@ function App() {
         pantallaBot={pantallaBot}
         user={user}
       />
-      <SaveDate />
+      <SaveDate userId={user} />
     </main>
   )
 }
